@@ -4,7 +4,6 @@ import fs from 'node:fs';
 import http from 'node:http';
 import path from 'node:path';
 import crypto from 'node:crypto';
-import { createServer as createViteServer } from 'vite';
 
 interface OrgMeta {
   orgName: string;
@@ -632,6 +631,10 @@ function buildStateForUser(user: UserAccount) {
 async function startServer() {
   const app = express();
   app.use(express.json({ limit: '1mb' }));
+
+  app.get('/api/health', (_req, res) => {
+    res.json({ status: 'ok' });
+  });
 
   // --- SSE Live Updates Stream ---
   app.get('/api/events', (req, res) => {
@@ -1776,6 +1779,7 @@ async function startServer() {
       res.sendFile(path.join(distDir, 'index.html'));
     });
   } else {
+    const { createServer: createViteServer } = await import('vite');
     const vite = await createViteServer({
       server: {
         middlewareMode: true,
@@ -1787,7 +1791,7 @@ async function startServer() {
     app.use(vite.middlewares);
   }
 
-  const PORT = 3000;
+  const PORT = Number(process.env.PORT) || 3000;
   httpServer.listen(PORT, '0.0.0.0', () => {
     console.log(`SSF VNR Unit Finance server running on http://0.0.0.0:${PORT}`);
   });
