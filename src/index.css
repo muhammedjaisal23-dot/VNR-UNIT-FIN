@@ -1,0 +1,71 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Poppins", system-ui, -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+:root {
+  --color-bold-orange: #ff4f00;
+  --color-golden-yellow: #ffc400;
+  --color-white: #ffffff;
+  --color-deep-black: #1c1c1c;
+  --color-canvas-light: #f7f6f3;
+  --color-canvas-dark: #121212;
+  --color-border-light: #e6e2da;
+  --color-border-dark: #303030;
+  --color-muted-light: #5c5852;
+  --color-muted-dark: #b8b8b8;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+
+  body {
+    background-color: #f7f6f3;
+    color: #1c1c1c;
+    overflow-x: hidden;
+  }
+
+  .dark body {
+    background-color: #121212;
+    color: #ffffff;
+    letter-spacing: 0.008em;
+  }
+
+  input,
+  select,
+  textarea,
+  button {
+    font-family: inherit;
+  }
+}
+
+.font-num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Custom subtle brand scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 79, 0, 0.28);
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(255, 196, 0, 0.3);
+}
